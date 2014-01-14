@@ -8,5 +8,10 @@
   <body>
     {% include "navbar.html" %}
     <h1 align="center"> Events </h1>
+    <!--dictionary within a list. [{'title': Title, 'info':info}, {same thing}]-->
+    {% for x in events %}
+    <h4> {{x['title']}}</h4>
+    <blockquote> {{x['info']}} </blockquote>
+    {% endfor %}
   </body>
 </html>
