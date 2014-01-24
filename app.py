@@ -16,7 +16,7 @@ def about():
 
 default = "d0000"
 @app.route('/Events/<event_id>')
-def events():
+def events(event_id):
     events = []
 # events is a list of dictionaries. Each dictionary will store
 # all information about a specific event, including links to
@@ -31,10 +31,10 @@ def events():
 # works the same way as the Events page
 # same default value
 @app.route('/Teams/<team_id>')
-def teams():
+def teams(team_id):
     teams = []
     if team_id == default:
-        return render_template("teams.html", teams = teams)
+        return render_template("team.html", teams = teams)
     return render_template("spec_team.html",
                            team = teams[team_id])
 

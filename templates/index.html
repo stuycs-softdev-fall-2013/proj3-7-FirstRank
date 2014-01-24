@@ -8,5 +8,21 @@
   <body>
     {% include "navbar.html" %}
     <h1 align="center"> FRC Stats </h1>
+    <div class="table-responsive">
+      <table class="table table-striped">
+	<th> Team </th>
+	<th> OPR </th>
+	<th> DPR </th>
+	<th> Diff PR </th>
+	{% for x in teams %}
+	<tr>
+	  <td> x["team"] </td>
+	  <td> x["OPR"] </td>
+	  <td> x["DPR"] </td>
+	  <td> x["Diff"] </td>
+	</tr>
+	{% endfor %}
+      </table>
+    </div>
   </body>
 </html>
