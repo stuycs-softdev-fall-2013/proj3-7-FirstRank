@@ -14,8 +14,17 @@ def match_info(key):
     return _api_call('match/details',match=key)
 
 def team_info(key):
-    return _api_call('teams/details',team=key)
+    return _api_call('team/details',team=key)
+
+def teams_show(key):
+    return _api_call('teams/show',teams=key)
 
 def _api_call(address, **params):
     "Private Function"
     return requests.get(api_url+address, params=params).json()
+
+#print teams_show('frc694,frc1')
+#print event_list(2013)
+#print event_info('2013nyny')
+#print team_info('frc694')
+#print match_info('2013nyny_qm20')
