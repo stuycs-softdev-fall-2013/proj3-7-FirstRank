@@ -2,6 +2,8 @@
 # and will convert the info to a form specifically
 # suited for the front end and database purposes
 
+
+
 import pymongo
 client = MongoClient('localhost':8000)
 
@@ -19,3 +21,4 @@ stats = db.stats #stats table, stores and gets updated from AP
 
 #will not be storing team info and event info as the API can quickly and easily
 #provide that
+
