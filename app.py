@@ -1,10 +1,17 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template("index.html")
+
+@app.route('/Search', methods=['GET', 'POST'])
+def search():
+    if request.method == "GET":
+        return render_template("search.html")
+    else:
+        return render_template("search.html") 
 
 @app.route('/<link>')
 def about(link):

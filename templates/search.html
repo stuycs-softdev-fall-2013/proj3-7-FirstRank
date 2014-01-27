@@ -7,14 +7,17 @@
   
   <body>
     {% include "navbar.html" %}
-    <form>
-      <p> <input type="text" value="Search" name="search">
-	Stats (if searching for team): 
+    <div style="padding:50px">
+      <form method="POST">
+	<p> <input type="text" value="Search" name="search"> 
+	  <button type="button" class="btn btn-default"> Submit </button>
+	</p>
 	<div class="checkbox">
-	  <label> <input type="checkbox" value="OPR"> OPR </label>
-	  <label> <input type="checkbox" value="DPR"> DPR </label>
-	  <label> <input type="checkbox" value="Diff PR"> Diff PR </label>
+	  <p> <input type="checkbox" id="inlineCheckbox1" value="OPR"> OPR </p>
+	  <p> <input type="checkbox" id="inlineCheckbox2" value="DPR"> DPR </p>
+	  <p> <input type="checkbox" id="inlineCheckbox3" value="Diff PR"> Diff PR </p>
 	</div>
-    </form>
+      </form>
+    </div>
   </body>
 </html>
