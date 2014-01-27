@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> {{Event[name]}} </title>
+    <title> {{event['name']}} </title>
     {% include "lib.html" %}
   </head>
 
   <body>
     {% include "navbar.html" %}
-    <h1 align="center"> {{Event[name}} </h1>
+    <h1 align="center"> {{event['name']}} </h1>
+    <div>
+      About {{event['name']}}:
+      {{event['info']}}
+    </div>
+    <h3 align="center"> Teams </h3>
+    <div class="table-responsive">
+      <table class="table table-striped">
+	<th> Team </th>
+	<th> OPR </th>
+	<th> DPR </th>
+	<th> Diff PR </th>
+        {% for x in teams %}
+        <tr>
+          <td> <a href="/Teams/{{x['team']}}"> {{x["team"]}}</a></td>
+          <td> {{x["OPR"]}} </td>
+          <td> {{x["DPR"]}} </td>
+          <td> {{x["Diff"]}} </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
   </body>
 </html>
