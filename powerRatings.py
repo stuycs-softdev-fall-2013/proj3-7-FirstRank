@@ -25,6 +25,4 @@ def diffpr(M, Mprime, S, Sprime):
 
 #This function just calls everything else.
 def getAllRatings(M, Mprime, S, Sprime):
-    return {'opr':opr(M, S), 'dpr':dpr(Mprime, Sprime), 
-            'diffpr':diffpr(M, Mprime, S, Sprime)}
-    
+    return {'opr':opr(M, S),'dpr': dpr(Mprime, Sprime),'diffpr': diffpr(M, Mprime, S, Sprime)}

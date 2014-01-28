@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> {{team}} </title>
+    <title> FRC Teams </title>
     {% include "lib.html" %}
   </head>
   
   <body>
     {% include "navbar.html" %}
-    <h1 align="center"> {{team}} </h1>
+    <h1 align="center"> Team Stats </h1>
+    <div class="table-responsive">
+      <table class="table table-striped">
+	<th> Team </th>
+	<th> OPR </th>
+	<th> DPR </th>
+	<th> Diff PR </th>
+	{% for team in teams %}
+	{% for x in team %}
+	<tr>
+	  <td> <!--<a href="/Teams/{{team[x]['key']}}">--> {{team[x]['teams']}}</a></td>
+	  <td> {{x['opr']}} </td>
+	  <td> {{x['dpr']}} </td>
+	  <td> {{x['diffpr']}} </td>
+	</tr>
+	{% endfor %}
+	{% endfor %}
+      </table>
+    </div>
+    {% if d['page'] != 1 %}
+    <a href="/Teamlist/{{d['page'] - 1}}"> Prev </a>
+    {% endif %}
+    {% if d['page'] != d['total'] %}
+    <a href="/Teamlist/{{d['page'] + 1}}"> Next </a>
+    {% endif %}
   </body>
 </html>

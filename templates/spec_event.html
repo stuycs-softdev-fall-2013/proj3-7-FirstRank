@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> {{event['name']}} </title>
+    {% include "lib.html" %}
+  </head>
+
+  <body>
+    {% include "navbar.html" %}
+    <h2 align="center"><a href="/Events/{{event['key']}}"> {{event['name']}} </a> </h2>
+    <div>
+      Location: {{event['location']}} <br>
+      Start Date: {{event['start_date'][:10]}} <br>
+      End Date: {{event['end_date'][:10]}}
+    </div>
+    <h3 align="center"> Teams </h3>
+    <div class="table-responsive">
+      <table class="table table-striped">
+	<th> Team </th>
+	<th> OPR </th>
+	<th> DPR </th>
+	<th> Diff PR </th>
+        {% for x in teams %}
+        <tr>
+          <td> <!--<a href="/Teams/{{x['key']}}">--> {{x["team"]}}</a></td>
+          <td> {{x['opr']}} </td>
+          <td> {{x['dpr']}} </td>
+          <td> {{x['diffpr']}} </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>
