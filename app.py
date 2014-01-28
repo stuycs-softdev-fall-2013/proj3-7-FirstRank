@@ -44,7 +44,8 @@ def teamlist(page_num=1):
 @app.route('/Teams/<team_id>')
 def teams(team_id):
     teams = api.team_info(team_id)
-    return render_template("spec_team.html", team = teams)
+    stat = {}
+    return render_template("spec_team.html", team = teams, stats=stat)
 
 if __name__ == "__main__":
     app.debug = True
