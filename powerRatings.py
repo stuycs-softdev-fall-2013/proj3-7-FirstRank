@@ -25,15 +25,4 @@ def diffpr(M, Mprime, S, Sprime):
 
 #This function just calls everything else.
 def getAllRatings(M, Mprime, S, Sprime):
-    return (opr(M, S), dpr(Mprime, Sprime), diffpr(M, Mprime, S, Sprime))
-
-#M_list[i][j] is the total number of matches in which team i and team j were on the same alliance.
-#Mprime_list[i][j] is the total...team i and team j were on opposing alliances.
-#S_list[i] is the total number of points scored by team i in all of their matches.
-#Sprime_list[i] is the total number of points scored against team i in team i's matches    
-def getEverythingWithLists(M_list, Mprime_list, S_list, Sprime_list):
-    M = matrix(M_list)
-    Mprime = matrix(Mprime_list)
-    S = matrix([[x] for x in S_list])
-    Sprime = matrix([[x] for x in Sprime_list])
-    return getAllRatings(M, Mprime, S, Sprime)
+    return {'opr':opr(M, S),'dpr': dpr(Mprime, Sprime),'diffpr': diffpr(M, Mprime, S, Sprime)}
