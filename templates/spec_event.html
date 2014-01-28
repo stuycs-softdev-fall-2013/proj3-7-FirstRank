@@ -22,10 +22,10 @@
 	<th> Diff PR </th>
         {% for x in teams %}
         <tr>
-          <td> <a href="/Teams/{{x['key']}}"> {{x["team"]}}</a></td>
-          <td> {{x["OPR"]}} </td>
-          <td> {{x["DPR"]}} </td>
-          <td> {{x["Diff"]}} </td>
+          <td> <!--<a href="/Teams/{{x['key']}}">--> {{x["team"]}}</a></td>
+          <td> {{x['opr']}} </td>
+          <td> {{x['dpr']}} </td>
+          <td> {{x['diffpr']}} </td>
         </tr>
         {% endfor %}
       </table>

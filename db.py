@@ -1,4 +1,6 @@
-<<<<<<< HEAD
+import sys
+from numpy import matrix
+import powerRatings as prs
 import api
 from pymongo import MongoClient
 
@@ -17,20 +19,6 @@ def team_compiler(page_num):
     cursor = db.teams.find(fields={'_id':False})
     teams = [x for x in cursor]
     return teams[(page_num - 1) * 100: page_num * 100]
-=======
-# will contain functions that pull info from api
-# and will convert the info to a form specifically
-# suited for the front end and database purposes
-import sys
-from numpy import matrix
-import powerRatings as prs
-#import pymongo
-#client = MongoClient('localhost':8000)
-
-#db = client.first
-#stats = db.stats #stats table, stores and gets updated from AP
-
-import api
 
 def copy(lst):
     copy = []
@@ -129,8 +117,16 @@ def event_prs(key):
     b = build_event(key)
     final = prs.getAllRatings(b['M'],b['Mprime'],b['S'],b['Sprime'])
     final['teams']=b['teams']
-    return final
+    db.event.insert({'key':key, 'stats':final})
+    #return final
 
+def get_event(key):
+    cursor = db.event.find({'key':key}, fields = {'_id': False, 'key':False})
+    stats = [stat for stat in cursor]
+    if len(stats) == 0:
+        event_prs(key)
+        return get_event(key)
+    return stats
 
 def build_year(year):
     event_keys = collect_event_keys(year)
@@ -237,19 +233,26 @@ def year_prs(year):
     b = build_year(year)
     final = prs.getAllRatings(b['M'],b['Mprime'],b['S'],b['Sprime'])
     final['teams']=b['teams']
-    return final
+    db.year.insert({'year':year, 'stats':final})
+    #return final
 
+def get_year_stats(year):
+    cursor = db.year.find({'year':year}, fields={'_id':False, 'year':False})
+    stats = [stat for stat in cursor]
+    if len(stats) == 0:
+        year_prs(year)
+        return get_year_stats(year)
+    return stats
 
+#x = year_prs(2012)
+#print x
 
-
-x = year_prs(2012)
-print x
-
->>>>>>> middle
 
 if __name__ == "__main__":
-    #addTeams()
-    teams = team_compiler(1)
-    for team in teams:
-        for x in team:
-            print team[x]
+    addTeams()
+    year_prs(2013)
+    
+  #  teams = team_compiler(1)
+   # for team in teams:
+    #    for x in team:
+     #       print team[x]

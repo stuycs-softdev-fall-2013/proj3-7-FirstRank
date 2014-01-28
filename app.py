@@ -5,7 +5,7 @@ import db
 
 app = Flask(__name__)
 
-year = time.localtime()[0]
+year = time.localtime()[0] -1
 
 @app.route('/')
 def home():
@@ -30,15 +30,15 @@ def events(event_id):
         return render_template("events.html", events = events)
     else:
         events = api.event_info(event_id)
-        return render_template("spec_event.html", event = events)
+        teams = db.get_event(event_id)
+        return render_template("spec_event.html", event = events, teams=teams)
 
 @app.route('/Teamlist/<page_num>')
 def teamlist(page_num=1):
     page = int(page_num)
-    teams = db.team_compiler(page)
-    d = {}
-    d['page'] = page
-    d['total'] = 54
+#    teams = db.team_compiler(page)
+    teams = db.get_year_stats(year)
+    d = {'page':page, 'total':54}
     return render_template("team.html", teams = teams, d=d) 
 
 @app.route('/Teams/<team_id>')
