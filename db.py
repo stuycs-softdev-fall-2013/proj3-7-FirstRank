@@ -1,35 +1,25 @@
-import api.py
+import api
+from pymongo import MongoClient
 
-# will contain functions that pull info from api
-# and will convert the info to a form specifically
-# suited for the front end and database purposes
+db = MongoClient().database
 
-
-
-import pymongo
-client = MongoClient('localhost':8000)
-
-db = client.first
-stats = db.stats #stats table, stores and gets updated from AP
-
-#documents in the stat table will be dictionaries structured as follows,
-#the first entry in the dictionary will be 'eventID':####
-#(4 digit ids used for events, 0000 indicates full season stats)
-#the rest of the entries will be a set [OPR,DPR,DiffPR] mapped to a team's
-#FIRST number. So, for example, if you wanted to get Stuy's
-#stats for the entire season in the stats collection, you would go:
-#>>>fullSeason = stats.find_one({'eventID':'0000'})
-#>>>return fullSeason['0694']
-
-#will not be storing team info and event info as the API can quickly and easily
-#provide that
-
-def team_compiler(page):
-    teams = []
-    i = (page - 1) * 100
-    while i < page*100:
-        team = api.team_info("frc" + str(i))
-        if 'key' in team:
-            teams.append(team)
+def addTeams():
+    i = 1
+    while i < 5382:
+        key = "frc" + str(i)
+        team = api.team_info(key)
+        if 'key' in team and team['name'] != None:
+            db.teams.insert({key:team})
         i = i + 1
-    return teams
+
+def team_compiler(page_num):
+    cursor = db.teams.find(fields={'_id':False})
+    teams = [x for x in cursor]
+    return teams[(page_num - 1) * 100: page_num * 100]
+
+if __name__ == "__main__":
+    #addTeams()
+    teams = team_compiler(1)
+    for team in teams:
+        for x in team:
+            print team[x]

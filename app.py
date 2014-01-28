@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 import time
 import api
+import db
 
 app = Flask(__name__)
 
@@ -31,15 +32,19 @@ def events(event_id):
         events = api.event_info(event_id)
         return render_template("spec_event.html", event = events)
 
+@app.route('/Teamlist/<page_num>')
+def teamlist(page_num=1):
+    page = int(page_num)
+    teams = db.team_compiler(page)
+    d = {}
+    d['page'] = page
+    d['total'] = 54
+    return render_template("team.html", teams = teams, d=d) 
+
 @app.route('/Teams/<team_id>')
-#@app.route('Teams/<page_num>')
 def teams(team_id):
-    if team_id == default:
-        teams = db.team_compiler()
-        return render_template("team.html", teams = teams)
-    else:
-        teams = api.team_info(team_id)
-        return render_template("spec_team.html", team = teams)
+    teams = api.team_info(team_id)
+    return render_template("spec_team.html", team = teams)
 
 if __name__ == "__main__":
     app.debug = True
