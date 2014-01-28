@@ -7,10 +7,11 @@
 
   <body>
     {% include "navbar.html" %}
-    <h1 align="center"> {{event['name']}} </h1>
+    <h2 align="center"><a href="/Events/{{event['key']}}"> {{event['name']}} </a> </h2>
     <div>
-      About {{event['name']}}:
-      {{event['info']}}
+      Location: {{event['location']}} <br>
+      Start Date: {{event['start_date'][:10]}} <br>
+      End Date: {{event['end_date'][:10]}}
     </div>
     <h3 align="center"> Teams </h3>
     <div class="table-responsive">

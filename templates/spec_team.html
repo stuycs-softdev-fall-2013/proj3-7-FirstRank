@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <Title> {{team[name]}} </title>
+    <Title> {{team['nickname']}} </title>
     {% include "lib.html" %}
   </head>
   
   <body>
     {% include "navbar.html" %}
-    <h1 align="center"> {{team[name]}} </h1>
+    <h1 align="center"> {{team['nickname']}} </h1>
     <div class="accordion" id="accordion2">
       <div class="accordion-group">
 	<div class="accordion-heading">
@@ -26,7 +26,7 @@
       <div class="accordion-group">
 	<div class="accordion-heading">
           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-          {{d['name']}}</a>
+            {{d['name']}}</a>
         </div>
 	<div id="collapseOne" class="accordion-body collapse in">
           <div class="accordion-inner">
@@ -36,6 +36,7 @@
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
   </body>
 </html>

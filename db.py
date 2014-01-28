@@ -1,3 +1,5 @@
+import api.py
+
 # will contain functions that pull info from api
 # and will convert the info to a form specifically
 # suited for the front end and database purposes
@@ -22,3 +24,12 @@ stats = db.stats #stats table, stores and gets updated from AP
 #will not be storing team info and event info as the API can quickly and easily
 #provide that
 
+def team_compiler(page):
+    teams = []
+    i = (page - 1) * 100
+    while i < page*100:
+        team = api.team_info("frc" + str(i))
+        if 'key' in team:
+            teams.append(team)
+        i = i + 1
+    return teams
