@@ -178,7 +178,7 @@ def build_year(year):
         while i<len(red['teams']):
             t = red['teams'][i]
             if t[len(t)-1]=='B':
-                t=t[:len(t)-1]
+                t=t[:len(tf)-1]
             i+=1
         for t in blue['teams']:
             #temp must be created separately from new literal
