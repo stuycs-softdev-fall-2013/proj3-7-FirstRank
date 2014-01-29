@@ -101,7 +101,7 @@ def collect_matches(match_key_list):
     return final
 
 #creates appropriate M, Mprime, S, and Sprime empty structures to be filled
-def create_mold(team_list):
+def create_mould(team_list):
     mtrix = []
     scorecard = []
     for t in team_list:
@@ -112,11 +112,87 @@ def create_mold(team_list):
         for t in team_list:
             mtrix[i].append(0)
         i+=1
-    a = doubleCopy(mtrix)
-    b = doubleCopy(mtrix)
-    c = scorecard[:]
-    d = scorecard[:]
-    return {'M':a,'Mprime':b,'S':c,'Sprime':d}
+    M = doubleCopy(mtrix)
+    Mprime = doubleCopy(mtrix)
+    S = scorecard[:]
+    Sprime = scorecard[:]
+    final = {'M':M,'Mprime':Mprime,'S':S,'Sprime':Sprime,'teams':team_list}
+    return final
+
+def fill_mould(mould,match):
+    team_list = mould['teams']
+    blue = match['alliances']['blue']
+    red = match['alliances']['red']
+    #remove modifications to match-specific team designations
+    blue['teams'] = removeBs(blue['teams'])
+    red['teams'] = removeBs(red['teams'])
+    #for each member of the blue team
+    for team in blue['teams']:
+        #fill M
+        temp = blue['teams'][:]
+        temp.remove(team)
+        for u in temp:
+            mould['M'][team_list.index(team)][team_list.index(u)]+=1
+        #fill Mprime
+        temp = red['teams'][:]
+        for u in temp:
+            mould['Mprime'][team_list.index(team)][team_list.index(u)]+=1
+        #fill S
+        mould['S'][team_list.index(team)]+=blue['score']
+        #fill Sprime
+        mould['Sprime'][team_list.index(team)]+=red['score']
+    #for each member of the red team
+    for team in red['teams']:
+        #fill M
+        temp = red['teams'][:]
+        temp.remove(team)
+        for u in temp:
+            mould['M'][team_list.index(team)][team_list.index(u)]+=1
+        #fill Mprime
+        temp = blue['teams'][:]
+        for u in temp:
+            mould['Mprime'][team_list.index(team)][team_list.index(u)]+=1
+        #fill S
+        mould['S'][team_list.index(team)]+=red['score']
+        #fill Sprime
+        mould['Sprime'][team_list.index(team)]+blue['score']
+    return mould
+
+def pour_mould(mould,match_list):
+    for match in match_list:
+        update("Pouring the mould",
+               "... pouring for match %d/%d"
+               %(match_list.index(match)+1,len(match_list)))
+        mould = fill_mould(mould, match)
+    print ''
+    return mould
+
+def run_mould(mould):
+    M = matrix(mould['M'])
+    Mprime = matrix(mould['Mprime'])
+    S = matrix(mould['S']).getT()
+    Sprime = matrix(mould['Sprime']).getT()
+    final = prs.getAllRatings(M,Mprime,S,Sprime)
+    final['teams'] = mould['teams'][:]
+    return final
+
+def uncase(sculpture):
+    i=0
+    while i<len(sculpture['teams']):
+        sculpture['diffpr'][i] = sculpture['diffpr'][i].tolist()[0][0]
+        sculpture['opr'][i] = sculpture['opr'][i].tolist()[0][0]
+        sculpture['dpr'][i] = sculpture['dpr'][i].tolist()[0][0]
+        i+=1
+    return sculpture
+        
+
+#def calc_stats_event(event_id):
+#    x = []
+#    x.append(event_id)
+#    x = collect_events(x)
+#    x = collect_match_keys(x)
+#    x = collect_matches(x)
+    
 
 ####==================== TESTS =====================####
 #x = []
@@ -124,12 +200,26 @@ def create_mold(team_list):
 #print collect_events(collect_event_keys(x))
 #WORKS!
 
-x = []
-x.append('2012ct')
-print create_mold(collect_teams(collect_events(x)))
+#x = []
+#x.append('2012ct')
+#print create_mold(collect_teams(collect_events(x)))
 #WORKS!
 
 #x = []
 #x.append('2012ct')
 #print collect_matches(collect_match_keys(collect_events(x)))
 #WORKS!
+
+def calc_stats_events(event_key_list):
+    x = event_key_list
+    mould = create_mould(collect_teams(collect_events(x)))
+    matches = collect_matches(collect_match_keys(collect_events(x)))
+    mould = pour_mould(mould,matches)
+    return uncase(run_mould(mould))
+
+def calc_stats_year(year_list):
+    x = collect_event_keys(year_list)
+    return calc_stats_events(x)
+
+print calc_stats_events(['2012ct'])
+    
