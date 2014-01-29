@@ -12,6 +12,9 @@ import powerRatings as prs
 
 import api
 
+def remove_the_Bs(l):
+    l = [x if x[-1]!='B' else x[:-1] for x in l]
+
 def copy(lst):
     copy = []
     for i in lst:
@@ -168,18 +171,6 @@ def build_year(year):
         sys.stdout.flush()
         blue = match[0]['alliances']['blue']
         red = match[0]['alliances']['red']
-        i=0
-        while i<len(blue['teams']):
-            t = blue['teams'][i]
-            if t[len(t)-1]=='B':
-                t=t[:len(t)-1]
-            i+=1
-        i=0
-        while i<len(red['teams']):
-            t = red['teams'][i]
-            if t[len(t)-1]=='B':
-                t=t[:len(tf)-1]
-            i+=1
         for t in blue['teams']:
             #temp must be created separately from new literal
             temp = copy(blue['teams'])
@@ -222,7 +213,10 @@ def year_prs(year):
 
 
 
-x = year_prs(2012)
-print x
+#x = event_prs('2012arc')
+#print x
 
+l = ['AA','AB','AC','BA','BB','BC']
+remove_the_Bs(l)
+print l
 
