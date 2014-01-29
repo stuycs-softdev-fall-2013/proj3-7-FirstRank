@@ -20,6 +20,9 @@ def team_compiler(page_num):
     teams = [x for x in cursor]
     return teams[(page_num - 1) * 100: page_num * 100]
 
+def remove_the_Bs(l):
+    l = [x if x[-1]!='B' else x[:-1] for x in l]
+
 def copy(lst):
     copy = []
     for i in lst:
@@ -184,18 +187,6 @@ def build_year(year):
         sys.stdout.flush()
         blue = match[0]['alliances']['blue']
         red = match[0]['alliances']['red']
-        i=0
-        while i<len(blue['teams']):
-            t = blue['teams'][i]
-            if t[len(t)-1]=='B':
-                t=t[:len(t)-1]
-            i+=1
-        i=0
-        while i<len(red['teams']):
-            t = red['teams'][i]
-            if t[len(t)-1]=='B':
-                t=t[:len(tf)-1]
-            i+=1
         for t in blue['teams']:
             #temp must be created separately from new literal
             temp = copy(blue['teams'])
@@ -244,9 +235,17 @@ def get_year_stats(year):
         return get_year_stats(year)
     return stats
 
+<<<<<<< HEAD
+
+#x = event_prs('2012arc')
+=======
 #x = year_prs(2012)
+>>>>>>> 5dd5506f96204ebf69bc01699bb9f0c8ff60f62a
 #print x
 
+l = ['AA','AB','AC','BA','BB','BC']
+remove_the_Bs(l)
+print l
 
 if __name__ == "__main__":
     addTeams()
