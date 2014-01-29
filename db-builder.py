@@ -16,7 +16,17 @@ def update(base_message,rolling_message):
 #removes 'B's which are sometimes suffixed to team names during matches
 #but not for the full event roster. not fixing this causes issues
 def removeBs(l):
-    final = [x if x[-1]!='B' else x[:-1] for x in l]
+    final = [x if (x[-1]=='0' or
+                   x[-1]=='1' or
+                   x[-1]=='2' or
+                   x[-1]=='3' or
+                   x[-1]=='4' or
+                   x[-1]=='5' or
+                   x[-1]=='6' or
+                   x[-1]=='7' or
+                   x[-1]=='8' or
+                   x[-1]=='9' )
+                   else x[:-1] for x in l]
     return final
 
 #to copy 1-D lists etc use new = old[:]
@@ -221,5 +231,4 @@ def calc_stats_year(year_list):
     x = collect_event_keys(year_list)
     return calc_stats_events(x)
 
-print calc_stats_events(['2012ct'])
-    
+print calc_stats_year([2013])
