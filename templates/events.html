@@ -8,7 +8,6 @@
   <body>
     {% include "navbar.html" %}
     <h1 align="center"> Events </h1>
-    <!--dictionary within a list. [{'title': Title, 'info':info}, {same thing}]-->
     <div>
       {% for x in events %}
       <h4> <a href="/Events/{{x['key']}}">{{x['name']}} </a></h4>

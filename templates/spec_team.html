@@ -16,23 +16,23 @@
 	</div>
 	<div id="collapseOne" class="accordion-body collapse in">
 	  <div class="accordion-inner">
-	    {% for x in stats.keys() %}
-	    {{x}} : {{stats[x]}}
-	    {% endfor %}
+	    OPR : {{stats['opr']}}
+	    DPR : {{stats['dpr']}}
+	    Diff PR : {{stats['diffpr']}}
 	  </div>
 	</div>
       </div>
-      {% for d in events %}
+      {% for event in events %}
       <div class="accordion-group">
 	<div class="accordion-heading">
           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-            {{d['name']}}</a>
+            <a href="/Events/{{event['key']}}">{{event['name']}}</a>
         </div>
 	<div id="collapseOne" class="accordion-body collapse in">
           <div class="accordion-inner">
-            {% for x in d['stats'].keys() %}
-            {{x}} : {{d['stats'][x]}}
-            {% endfor %}
+	    OPR : {{event['opr']}}
+	    DPR : {{event['dpr']}}
+	    Diff PR : {{event['diffpr']}}
           </div>
         </div>
       </div>
