@@ -250,9 +250,3 @@ def get_year_stats(year):
 
 if __name__ == "__main__":
     addTeams()
-    year_prs(2013)
-    
-  #  teams = team_compiler(1)
-   # for team in teams:
-    #    for x in team:
-     #       print team[x]
