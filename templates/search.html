@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Search </title>
+    {% include "lib.html" %}
+  </head>
+  
+  <body>
+    {% include "navbar.html" %}
+    <div style="padding:50px">
+      <form method="POST">
+	<p> <input type="text" value="Search" name="search"> 
+	  <button type="button" class="btn btn-default"> Submit </button>
+	</p>
+	<div class="checkbox">
+	  <p> <input type="checkbox" id="inlineCheckbox1" value="OPR"> OPR </p>
+	  <p> <input type="checkbox" id="inlineCheckbox2" value="DPR"> DPR </p>
+	  <p> <input type="checkbox" id="inlineCheckbox3" value="Diff PR"> Diff PR </p>
+	</div>
+      </form>
+    </div>
+  </body>
+</html>

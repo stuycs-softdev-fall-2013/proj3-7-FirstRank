@@ -1,42 +1,51 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request
+import time
+import api
+import db
 
 app = Flask(__name__)
+
+year = time.localtime()[0] -1
 
 @app.route('/')
 def home():
     return render_template("index.html")
 
-@app.route('/About')
-def about():
-    return render_template("about.html")
+#@app.route('/Search', methods=['GET', 'POST'])
+#def search():
+ #   if request.method == "GET":
+  #      return render_template("search.html")
+   # else:
+    #    return render_template("search.html") 
 
-# returns an event page
-# a specific event_id will be reserved
-# to access a list of all events.
+@app.route('/<link>')
+def about(link):
+    return redirect("http://www3.usfirst.org/roboticsprograms/frc")
 
 default = "d0000"
 @app.route('/Events/<event_id>')
-def events():
-    events = []
-# events is a list of dictionaries. Each dictionary will store
-# all information about a specific event, including links to
-# specific teams
+def events(event_id):
     if event_id == default:
-# return master-list of all events. table format(?)
+        events = api.event_list(year)
         return render_template("events.html", events = events)
-# returns specific event page
-    return render_template("spec_event.html",
-                           event = events[event_id]);
+    else:
+        events = api.event_info(event_id)
+        teams = db.get_event(event_id)
+        return render_template("spec_event.html", event = events, teams=teams)
 
-# works the same way as the Events page
-# same default value
+@app.route('/Teamlist/<page_num>')
+def teamlist(page_num=1):
+    page = int(page_num)
+#    teams = db.team_compiler(page)
+    teams = db.get_year_stats(year)
+    d = {'page':page, 'total':54}
+    return render_template("team.html", teams = teams, d=d) 
+
 @app.route('/Teams/<team_id>')
-def teams():
-    teams = []
-    if team_id == default:
-        return render_template("teams.html", teams = teams)
-    return render_template("spec_team.html",
-                           team = teams[team_id])
+def teams(team_id):
+    teams = api.team_info(team_id)
+    stat = {}
+    return render_template("spec_team.html", team = teams, stats=stat)
 
 if __name__ == "__main__":
     app.debug = True
