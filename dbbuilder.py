@@ -231,7 +231,7 @@ def calc_stats_year(year_list):
     x = collect_event_keys(year_list)
     return calc_stats_events(x)
 
-#print calc_stats_year([2013])
+print calc_stats_year(['2012ww'])
 
 
 #EVERYTHING WORKS! YISS!!!! SUCCESS!!!!
