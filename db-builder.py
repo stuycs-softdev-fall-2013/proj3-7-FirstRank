@@ -13,6 +13,8 @@ def update(base_message,rolling_message):
     sys.stdout.write("\r"+base_message+rolling_message)
     sys.stdout.flush()
 
+#removes 'B's which are sometimes suffixed to team names during matches
+#but not for the full event roster. not fixing this causes issues
 def removeBs(l):
     final = [x if x[-1]!='B' else x[:-1] for x in l]
     return final
@@ -66,17 +68,27 @@ def collect_teams(event_list):
     return final
     
 #takes list of full dictionaries returned by an api.event_info(key) call
-def collect_match_ids(event_list):
+def collect_match_keys(event_list):
     final = []
     for event in event_list:
-        progressBar("Populating Match IDs List",event_list.index(event)+1,len(event_list))
+        progressBar("Populating Match Key List",event_list.index(event)+1,len(event_list))
         for m in event['matches']:
             final.append(m)    
     final = clean(final)
-    print "\nMatche ID List Complete!"
+    print "\nMatch Key List Complete!"
     return final
 
-
+def collect_matches(match_key_list):
+    match_key_list = clean(match_key_list)
+    final = []
+    for match_key in match_key_list:
+        update("Collecting Match Infos",
+               "... collecting for match %d/%d"
+               %(match_key_list.index(match_key)+1,len(match_key_list)))
+        a = api.match_info(match_key)[0]
+        final.append(a)
+    print "\nMatch Infos Collected!"
+    return final
 
 ####==================== TESTS =====================####
 #x = []
@@ -89,3 +101,7 @@ def collect_match_ids(event_list):
 #print collect_teams(collect_events(x))
 #WORKS!
 
+#x = []
+#x.append('2012ct')
+#print collect_matches(collect_match_keys(collect_events(x)))
+#WORKS!
