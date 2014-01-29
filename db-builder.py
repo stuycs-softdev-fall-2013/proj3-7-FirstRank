@@ -19,7 +19,17 @@ def removeBs(l):
     final = [x if x[-1]!='B' else x[:-1] for x in l]
     return final
 
-#to copy lists, strings, etc use new = old[:]
+#to copy 1-D lists etc use new = old[:]
+#but to copy 2-D lists...
+def doubleCopy(l):
+    final = []
+    for element in l:
+        final.append([])
+    i = 0
+    while i<len(final):
+        final[i] = l[i][:]
+        i+=1
+    return final
 
 #removes redundancies and orders list
 #better used at start on input, but sometimes cannot be
@@ -90,15 +100,33 @@ def collect_matches(match_key_list):
     print "\nMatch Infos Collected!"
     return final
 
+#creates appropriate M, Mprime, S, and Sprime empty structures to be filled
+def create_mold(team_list):
+    mtrix = []
+    scorecard = []
+    for t in team_list:
+        mtrix.append([])
+        scorecard.append(0)
+    i = 0
+    while i<len(team_list):
+        for t in team_list:
+            mtrix[i].append(0)
+        i+=1
+    a = doubleCopy(mtrix)
+    b = doubleCopy(mtrix)
+    c = scorecard[:]
+    d = scorecard[:]
+    return {'M':a,'Mprime':b,'S':c,'Sprime':d}
+
 ####==================== TESTS =====================####
 #x = []
 #x.append(2012)
 #print collect_events(collect_event_keys(x))
 #WORKS!
 
-#x = []
-#x.append('2012ct')
-#print collect_teams(collect_events(x))
+x = []
+x.append('2012ct')
+print create_mold(collect_teams(collect_events(x)))
 #WORKS!
 
 #x = []
