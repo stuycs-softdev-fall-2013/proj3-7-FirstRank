@@ -21,7 +21,10 @@ def teams_show(key):
 
 def _api_call(address, **params):
     "Private Function"
-    return requests.get(api_url+address, params=params).json()
+    headers = {'X-TBA-App-Id':'frc694:FRCstats:1.0'}
+    return requests.get(api_url+address,
+                        params=params,
+                        headers=headers).json()
 
 #print teams_show('frc694,frc1')
 #print event_list(2013)
